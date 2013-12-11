@@ -796,12 +796,6 @@ class Widget_Archive extends Widget_Abstract_Contents
             }
         }
 
-        /** 设置关键词 */
-        $this->_keywords = implode(',', Typecho_Common::arrayFlatten($this->tags, 'name'));
-
-        /** 设置描述 */
-        $this->_description = $this->description;
-
         /** 设置模板 */
         if ($this->template) {
             /** 应用自定义模板 */
@@ -823,6 +817,12 @@ class Widget_Archive extends Widget_Abstract_Contents
 
             /** 设置标题 */
             $this->_archiveTitle = $this->title;
+
+            /** 设置关键词 */
+            $this->_keywords = implode(',', Typecho_Common::arrayFlatten($this->tags, 'name'));
+
+            /** 设置描述 */
+            $this->_description = $this->description;
         }
 
         /** 设置归档类型 */
@@ -1564,6 +1564,8 @@ class Widget_Archive extends Widget_Abstract_Contents
             $allows = array_merge($allows, $rules);
         }
 
+        $allows = $this->pluginHandle()->headerOptions($allows, $this);
+
         $header = '';
         if (!empty($allows['description'])) {
             $header .= '<meta name="description" content="' . $allows['description'] . '" />' . "\n";
@@ -1687,7 +1689,7 @@ var TypechoComment = {
         }
 
         /** 插件支持 */
-        $header = $this->pluginHandle()->header($header, $this);
+        $this->pluginHandle()->header($header, $this);
 
         /** 输出header */
         echo $header;
