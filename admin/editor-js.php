@@ -1,4 +1,5 @@
 <?php if(!defined('__TYPECHO_ROOT_DIR__')) exit; ?>
+
 <?php $content = !empty($post) ? $post : $page; if ($options->markdown && (!$content->have() || $content->isMarkdown)): ?>
 <script src="<?php $options->adminUrl('js/pagedown.js?v=' . $suffixVersion); ?>"></script>
 <script src="<?php $options->adminUrl('js/pagedown-extra.js?v=' . $suffixVersion); ?>"></script>
@@ -14,7 +15,7 @@ $(document).ready(function () {
     options.strings = {
         bold: '<?php _e('加粗'); ?> <strong> Ctrl+B',
         boldexample: '<?php _e('加粗文字'); ?>',
-            
+
         italic: '<?php _e('斜体'); ?> <em> Ctrl+I',
         italicexample: '<?php _e('斜体文字'); ?>',
 
@@ -62,7 +63,7 @@ $(document).ready(function () {
         diffMatch = new diff_match_patch(), last = '', preview = $('#wmd-preview'),
         mark = '@mark' + Math.ceil(Math.random() * 100000000) + '@',
         span = '<span class="diff" />';
-    
+
     // 设置markdown
     Markdown.Extra.init(converter, {
         extensions  :   ["tables", "fenced_code_gfm", "def_list", "attr_list", "footnotes"]
@@ -97,7 +98,7 @@ $(document).ready(function () {
 
         if (diffs.length > 0) {
             var stack = [], markStr = mark;
-            
+
             for (var i = 0; i < diffs.length; i ++) {
                 var diff = diffs[i], op = diff[0], str = diff[1]
                     sp = str.lastIndexOf('<'), ep = str.lastIndexOf('>');
@@ -117,7 +118,7 @@ $(document).ready(function () {
                             stack.push(markStr);
                         }
                     }
-                    
+
                     markStr = '';
                 } else {
                     stack.push(str);
@@ -173,14 +174,14 @@ $(document).ready(function () {
         ph = preview.height();
         $(document.body).addClass('fullscreen');
         var h = $(window).height() - toolbar.outerHeight();
-        
+
         textarea.css('height', h);
         preview.css('height', h);
     });
 
     editor.hooks.chain('enterFullScreen', function () {
         $(document.body).addClass('fullscreen');
-        
+
         var h = window.screen.height - toolbar.outerHeight();
         textarea.css('height', h);
         preview.css('height', h);
@@ -221,7 +222,7 @@ $(document).ready(function () {
         $(".wmd-edittab a").removeClass('active');
         $(this).addClass("active");
         $("#wmd-editarea, #wmd-preview").addClass("wmd-hidetab");
-        
+
         var selected_tab = $(this).attr("href"),
             selected_el = $(selected_tab).removeClass("wmd-hidetab");
 
@@ -236,7 +237,75 @@ $(document).ready(function () {
         $("#wmd-preview").outerHeight($("#wmd-editarea").innerHeight());
 
         return false;
+    })
+
+    // text 自动拉伸
+    Typecho.editorResize('text', '<?php $options->index('/action/ajax?do=editorResize'); ?>');
+
+    var submitted = false, form = $('form[name=write_post],form[name=write_page]').submit(function () {
+        submitted = true;
+    }), savedData = null;
+
+
+    // 自动检测离开页
+    var lastData = form.serialize();
+
+    $(window).bind('beforeunload', function () {
+        if (!!savedData) {
+            lastData = savedData;
+        }
+
+        if (form.serialize() != lastData && !submitted) {
+            return '<?php _e('内容已经改变尚未保存, 您确认要离开此页面吗?'); ?>';
+        }
     });
+    // 自动保存
+    <?php if ($options->autoSave): ?>
+    var locked = false,
+        formAction = form.attr('action'),
+        idInput = $('input[name=cid]'),
+        cid = idInput.val(),
+        autoSave = $('<span id="auto-save-message" class="left"></span>').prependTo('.submit'),
+        autoSaveOnce = !!cid,
+        lastSaveTime = null;
+
+    function autoSaveListener () {
+        setInterval(function () {
+            idInput.val(cid);
+            var data = form.serialize();
+
+            if (savedData != data && !locked) {
+                locked = true;
+
+                autoSave.text('<?php _e('正在保存'); ?>');
+                $.post(formAction + '?do=save', data, function (o) {
+                    savedData = data;
+                    lastSaveTime = o.time;
+                    cid = o.cid;
+                    autoSave.text('<?php _e('内容已经保存'); ?>' + ' (' + o.time + ')').effect('highlight', 1000);
+                    locked = false;
+                }, 'json');
+            }
+        }, 10000);
+    }
+
+    if (autoSaveOnce) {
+        savedData = form.serialize();
+        autoSaveListener();
+    }
+
+    $('#text').bind('input propertychange', function () {
+        if (!locked) {
+            autoSave.text('<?php _e('内容尚未保存'); ?>' + (lastSaveTime ? ' (<?php _e('上次保存时间'); ?>: ' + lastSaveTime + ')' : ''));
+        }
+
+        if (!autoSaveOnce) {
+            autoSaveOnce = true;
+            autoSaveListener();
+        }
+    });
+    <?php endif; ?>
+
 });
 </script>
 <?php endif; ?>
