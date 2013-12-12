@@ -1,61 +1,60 @@
 <?php if(!defined('__TYPECHO_ROOT_DIR__')) exit; ?>
-
 <?php $content = !empty($post) ? $post : $page; if ($options->markdown && (!$content->have() || $content->isMarkdown)): ?>
-<script src="<?php $options->adminUrl('js/pagedown.js?v=' . $suffixVersion); ?>"></script>
-<script src="<?php $options->adminUrl('js/pagedown-extra.js?v=' . $suffixVersion); ?>"></script>
-<script src="<?php $options->adminUrl('js/diff.js?v=' . $suffixVersion); ?>"></script>
-<script>
-$(document).ready(function () {
-    var textarea = $('#text'),
-        toolbar = $('<div class="editor" id="wmd-button-bar" />').insertBefore(textarea.parent())
+    <script src="<?php $options->adminUrl('js/pagedown.js?v=' . $suffixVersion); ?>"></script>
+    <script src="<?php $options->adminUrl('js/pagedown-extra.js?v=' . $suffixVersion); ?>"></script>
+    <script src="<?php $options->adminUrl('js/diff.js?v=' . $suffixVersion); ?>"></script>
+    <script>
+    $(document).ready(function () {
+        var textarea = $('#text'),
+            toolbar = $('<div class="editor" id="wmd-button-bar" />').insertBefore(textarea.parent())
         preview = $('<div id="wmd-preview" class="wmd-hidetab" />').insertAfter('.editor');
 
-    var options = {};
+        var options = {};
 
-    options.strings = {
-        bold: '<?php _e('加粗'); ?> <strong> Ctrl+B',
-        boldexample: '<?php _e('加粗文字'); ?>',
+        options.strings = {
+            bold: '<?php _e('加粗'); ?> <strong> Ctrl+B',
+            boldexample: '<?php _e('加粗文字'); ?>',
 
-        italic: '<?php _e('斜体'); ?> <em> Ctrl+I',
-        italicexample: '<?php _e('斜体文字'); ?>',
+            italic: '<?php _e('斜体'); ?> <em> Ctrl+I',
+            italicexample: '<?php _e('斜体文字'); ?>',
 
-        link: '<?php _e('链接'); ?> <a> Ctrl+L',
-        linkdescription: '<?php _e('请输入链接描述'); ?>',
+            link: '<?php _e('链接'); ?> <a> Ctrl+L',
+            linkdescription: '<?php _e('请输入链接描述'); ?>',
 
-        quote:  '<?php _e('引用'); ?> <blockquote> Ctrl+Q',
-        quoteexample: '<?php _e('引用文字'); ?>',
+            quote:  '<?php _e('引用'); ?> <blockquote> Ctrl+Q',
+            quoteexample: '<?php _e('引用文字'); ?>',
 
-        code: '<?php _e('代码'); ?> <pre><code> Ctrl+K',
-        codeexample: '<?php _e('请输入代码'); ?>',
+            code: '<?php _e('代码'); ?> <pre><code> Ctrl+K',
+            codeexample: '<?php _e('请输入代码'); ?>',
 
-        image: '<?php _e('图片'); ?> <img> Ctrl+G',
-        imagedescription: '<?php _e('请输入图片描述'); ?>',
+            image: '<?php _e('图片'); ?> <img> Ctrl+G',
+            imagedescription: '<?php _e('请输入图片描述'); ?>',
 
-        olist: '<?php _e('数字列表'); ?> <ol> Ctrl+O',
-        ulist: '<?php _e('普通列表'); ?> <ul> Ctrl+U',
-        litem: '<?php _e('列表项目'); ?>',
+            olist: '<?php _e('数字列表'); ?> <ol> Ctrl+O',
+            ulist: '<?php _e('普通列表'); ?> <ul> Ctrl+U',
+            litem: '<?php _e('列表项目'); ?>',
 
-        heading: '<?php _e('标题'); ?> <h1>/<h2> Ctrl+H',
-        headingexample: '<?php _e('标题文字'); ?>',
+            heading: '<?php _e('标题'); ?> <h1>/<h2> Ctrl+H',
+            headingexample: '<?php _e('标题文字'); ?>',
 
-        hr: '<?php _e('分割线'); ?> <hr> Ctrl+R',
-        more: '<?php _e('摘要分割线'); ?> <!--more--> Ctrl+M',
+            hr: '<?php _e('分割线'); ?> <hr> Ctrl+R',
+            more: '<?php _e('摘要分割线'); ?> <!--more--> Ctrl+M',
 
-        undo: '<?php _e('撤销'); ?> - Ctrl+Z',
-        redo: '<?php _e('重做'); ?> - Ctrl+Y',
-        redomac: '<?php _e('重做'); ?> - Ctrl+Shift+Z',
+                undo: '<?php _e('撤销'); ?> - Ctrl+Z',
+            redo: '<?php _e('重做'); ?> - Ctrl+Y',
+            redomac: '<?php _e('重做'); ?> - Ctrl+Shift+Z',
 
-        fullscreen: '<?php _e('全屏'); ?> - Ctrl+J',
-        exitFullscreen: '<?php _e('退出全屏'); ?> - Ctrl+E',
-        fullscreenUnsupport: '<?php _e('此浏览器不支持全屏操作'); ?>',
+            fullscreen: '<?php _e('全屏'); ?> - Ctrl+J',
+            exitFullscreen: '<?php _e('退出全屏'); ?> - Ctrl+E',
+            fullscreenUnsupport: '<?php _e('此浏览器不支持全屏操作'); ?>',
 
-        imagedialog: '<p><b><?php _e('插入图片'); ?></b></p><p><?php _e('请在下方的输入框内输入要插入的远程图片地址'); ?></p><p><?php _e('您也可以使用编辑器下方的文件上传功能插入本地图片'); ?></p>',
-        linkdialog: '<p><b><?php _e('插入链接'); ?></b></p><p><?php _e('请在下方的输入框内输入要插入的链接地址'); ?></p>',
+            imagedialog: '<p><b><?php _e('插入图片'); ?></b></p><p><?php _e('请在下方的输入框内输入要插入的远程图片地址'); ?></p><p><?php _e('您也可以使用编辑器下方的文件上传功能插入本地图片'); ?></p>',
+            linkdialog: '<p><b><?php _e('插入链接'); ?></b></p><p><?php _e('请在下方的输入框内输入要插入的链接地址'); ?></p>',
 
-        ok: '<?php _e('确定'); ?>',
-        cancel: '<?php _e('取消'); ?>',
+            ok: '<?php _e('确定'); ?>',
+            cancel: '<?php _e('取消'); ?>',
 
-        help: '<?php _e('Markdown语法帮助'); ?>'
+            help: '<?php _e('Markdown语法帮助'); ?>'
     };
 
     var converter = new Markdown.Converter(),
@@ -84,63 +83,63 @@ $(document).ready(function () {
         html = html.replace(/\s*((?:<br>\n)+)\s*(<\/?(?:p|div|h[1-6]|blockquote|pre|table|dl|ol|ul|address|form|fieldset|iframe|hr|legend|article|section|nav|aside|hgroup|header|footer|figcaption|li|dd|dt)[^\w])/gm, '$2');
 
         if (html.indexOf('<!--more-->') > 0) {
-            var parts = html.split(/\s*<\!\-\-more\-\->\s*/),
-                summary = parts.shift(),
-                details = parts.join('');
+        var parts = html.split(/\s*<\!\-\-more\-\->\s*/),
+            summary = parts.shift(),
+            details = parts.join('');
 
-            html = '<div class="summary">' + summary + '</div>'
-                + '<div class="details">' + details + '</div>';
-        }
+        html = '<div class="summary">' + summary + '</div>'
+            + '<div class="details">' + details + '</div>';
+    }
 
 
-        var diffs = diffMatch.diff_main(last, html);
-        last = html;
+    var diffs = diffMatch.diff_main(last, html);
+    last = html;
 
-        if (diffs.length > 0) {
-            var stack = [], markStr = mark;
+    if (diffs.length > 0) {
+        var stack = [], markStr = mark;
 
-            for (var i = 0; i < diffs.length; i ++) {
-                var diff = diffs[i], op = diff[0], str = diff[1]
-                    sp = str.lastIndexOf('<'), ep = str.lastIndexOf('>');
+        for (var i = 0; i < diffs.length; i ++) {
+            var diff = diffs[i], op = diff[0], str = diff[1]
+            sp = str.lastIndexOf('<'), ep = str.lastIndexOf('>');
 
-                if (op != 0) {
-                    if (sp >=0 && sp > ep) {
-                        if (op > 0) {
-                            stack.push(str.substring(0, sp) + markStr + str.substring(sp));
-                        } else {
-                            var lastStr = stack[stack.length - 1], lastSp = lastStr.lastIndexOf('<');
-                            stack[stack.length - 1] = lastStr.substring(0, lastSp) + markStr + lastStr.substring(lastSp);
-                        }
+            if (op != 0) {
+                if (sp >=0 && sp > ep) {
+                    if (op > 0) {
+                        stack.push(str.substring(0, sp) + markStr + str.substring(sp));
                     } else {
-                        if (op > 0) {
-                            stack.push(str + markStr);
-                        } else {
-                            stack.push(markStr);
-                        }
+                        var lastStr = stack[stack.length - 1], lastSp = lastStr.lastIndexOf('<');
+                        stack[stack.length - 1] = lastStr.substring(0, lastSp) + markStr + lastStr.substring(lastSp);
                     }
-
-                    markStr = '';
                 } else {
-                    stack.push(str);
+                    if (op > 0) {
+                        stack.push(str + markStr);
+                    } else {
+                        stack.push(markStr);
+                    }
                 }
-            }
 
-            html = stack.join('');
-
-            if (!markStr) {
-                var pos = html.indexOf(mark), prev = html.substring(0, pos),
-                    next = html.substr(pos + mark.length),
-                    sp = prev.lastIndexOf('<'), ep = prev.lastIndexOf('>');
-
-                if (sp >= 0 && sp > ep) {
-                    html = prev.substring(0, sp) + span + prev.substring(sp) + next;
-                } else {
-                    html = prev + span + next;
-                }
+                markStr = '';
+            } else {
+                stack.push(str);
             }
         }
 
-        return html;
+        html = stack.join('');
+
+        if (!markStr) {
+            var pos = html.indexOf(mark), prev = html.substring(0, pos),
+                next = html.substr(pos + mark.length),
+                sp = prev.lastIndexOf('<'), ep = prev.lastIndexOf('>');
+
+            if (sp >= 0 && sp > ep) {
+                html = prev.substring(0, sp) + span + prev.substring(sp) + next;
+            } else {
+                html = prev + span + next;
+            }
+        }
+    }
+
+    return html;
     });
 
     editor.hooks.chain('onPreviewRefresh', function () {
@@ -237,76 +236,7 @@ $(document).ready(function () {
         $("#wmd-preview").outerHeight($("#wmd-editarea").innerHeight());
 
         return false;
-    })
-
-    // text 自动拉伸
-    Typecho.editorResize('text', '<?php $options->index('/action/ajax?do=editorResize'); ?>');
-
-    var submitted = false, form = $('form[name=write_post],form[name=write_page]').submit(function () {
-        submitted = true;
-    }), savedData = null;
-
-
-    // 自动检测离开页
-    var lastData = form.serialize();
-
-    $(window).bind('beforeunload', function () {
-        if (!!savedData) {
-            lastData = savedData;
-        }
-
-        if (form.serialize() != lastData && !submitted) {
-            return '<?php _e('内容已经改变尚未保存, 您确认要离开此页面吗?'); ?>';
-        }
     });
-    // 自动保存
-    <?php if ($options->autoSave): ?>
-    var locked = false,
-        formAction = form.attr('action'),
-        idInput = $('input[name=cid]'),
-        cid = idInput.val(),
-        autoSave = $('<span id="auto-save-message" class="left"></span>').prependTo('.submit'),
-        autoSaveOnce = !!cid,
-        lastSaveTime = null;
-
-    function autoSaveListener () {
-        setInterval(function () {
-            idInput.val(cid);
-            var data = form.serialize();
-
-            if (savedData != data && !locked) {
-                locked = true;
-
-                autoSave.text('<?php _e('正在保存'); ?>');
-                $.post(formAction + '?do=save', data, function (o) {
-                    savedData = data;
-                    lastSaveTime = o.time;
-                    cid = o.cid;
-                    autoSave.text('<?php _e('内容已经保存'); ?>' + ' (' + o.time + ')').effect('highlight', 1000);
-                    locked = false;
-                }, 'json');
-            }
-        }, 10000);
-    }
-
-    if (autoSaveOnce) {
-        savedData = form.serialize();
-        autoSaveListener();
-    }
-
-    $('#text').bind('input propertychange', function () {
-        if (!locked) {
-            autoSave.text('<?php _e('内容尚未保存'); ?>' + (lastSaveTime ? ' (<?php _e('上次保存时间'); ?>: ' + lastSaveTime + ')' : ''));
-        }
-
-        if (!autoSaveOnce) {
-            autoSaveOnce = true;
-            autoSaveListener();
-        }
     });
-    <?php endif; ?>
-
-});
-</script>
+    </script>
 <?php endif; ?>
-
