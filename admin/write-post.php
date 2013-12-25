@@ -18,7 +18,7 @@ Typecho_Widget::widget('Widget_Contents_Post_Edit')->to($post);
 
                     <p class="title">
                         <label for="title" class="sr-only"><?php _e('标题'); ?></label>
-                        <input type="text" id="title" name="title" autocomplete="off" value="<?php echo htmlspecialchars($post->title); ?>" placeholder="<?php _e('标题'); ?>" class="w-100 text title" />
+                        <input type="text" id="title" name="title" autocomplete="off" value="<?php $post->title(); ?>" placeholder="<?php _e('标题'); ?>" class="w-100 text title" />
                     </p>
                     <?php $permalink = Typecho_Common::url($options->routingTable['post']['url'], $options->index);
                     list ($scheme, $permalink) = explode(':', $permalink, 2);
@@ -46,6 +46,7 @@ Typecho_Widget::widget('Widget_Contents_Post_Edit')->to($post);
 
                     <p class="submit clearfix">
                         <span class="right">
+                            <!-- <button type="button" class="btn-text" id="btn-fullscreen-upload"><i class="i-upload"><?php _e('附件'); ?></i></button> -->
                             <input type="hidden" name="cid" value="<?php $post->cid(); ?>" />
                             <button type="submit" name="do" value="save" id="btn-save"><?php _e('保存草稿'); ?></button>
                             <button type="submit" name="do" value="publish" class="primary" id="btn-submit"><?php _e('发布文章'); ?></button>
@@ -153,7 +154,7 @@ Typecho_Widget::widget('Widget_Contents_Post_Edit')->to($post);
                         <?php endif; ?>
                     </div><!-- end #tab-advance -->
 
-                    <div id="tab-files" class="tab-content">
+                    <div id="tab-files" class="tab-content hidden">
                         <?php include 'file-upload.php'; ?>
                     </div><!-- end #tab-files -->
                 </div>

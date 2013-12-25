@@ -1,4 +1,4 @@
-<?php if(!defined('__TYPECHO_ROOT_DIR__')) exit; ?>
+<?php if(!defined('__TYPECHO_ADMIN__')) exit; ?>
 <?php
 if (isset($post) && $post instanceof Typecho_Widget && $post->have()) {
     $fileParentContent = $post;
@@ -52,6 +52,12 @@ $(document).ready(function() {
     }
 
     function fileUploadComplete (id, url, data) {
+        // 拖拽上传的错误提示
+        if (!data) {
+            alert(errorWord);
+            return;
+        }
+
         var li = $('#' + id).removeClass('loading').data('cid', data.cid)
             .data('url', data.url)
             .data('image', data.isImage)
@@ -65,6 +71,7 @@ $(document).ready(function() {
         attachInsertEvent(li);
         attachDeleteEvent(li);
         updateAttacmentNumber();
+        Typecho.uploadComplete(data);
     }
 
     $('#tab-files').bind('init', function () {

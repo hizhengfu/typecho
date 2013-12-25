@@ -1,8 +1,5 @@
 <!DOCTYPE HTML>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<html class="no-js">
 <head>
     <meta charset="<?php $this->options->charset(); ?>">
     <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
@@ -16,13 +13,13 @@
         ), '', ' - '); ?><?php $this->options->title(); ?></title>
 
     <!-- 使用url函数转换相关路径 -->
-    <link rel="stylesheet" href="<?php $this->options->adminUrl('css/normalize.css'); ?>">
-    <link rel="stylesheet" href="<?php $this->options->adminUrl('css/grid.css'); ?>">
+    <link rel="stylesheet" href="http://cdn.staticfile.org/normalize/2.1.3/normalize.min.css">
+    <link rel="stylesheet" href="<?php $this->options->themeUrl('grid.css'); ?>">
     <link rel="stylesheet" href="<?php $this->options->themeUrl('style.css'); ?>">
 
     <!--[if lt IE 9]>
-    <script src="<?php $this->options->adminUrl('js/html5shiv.js'); ?>"></script>
-    <script src="<?php $this->options->adminUrl('js/respond.js'); ?>"></script>
+    <script src="http://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+    <script src="http://cdn.staticfile.org/respond.js/1.3.0/respond.min.js"></script>
     <![endif]-->
 
     <!-- 通过自有函数输出HTML头部信息 -->
@@ -30,7 +27,7 @@
 </head>
 <body>
 <!--[if lt IE 8]>
-    <div class="browsehappy"><?php _e('当前网页 <strong>不支持</strong> 你正在使用的浏览器. 为了正常的访问, 请 <a href="http://browsehappy.com/">升级你的浏览器</a>'); ?>.</div>
+    <div class="browsehappy" role="dialog"><?php _e('当前网页 <strong>不支持</strong> 你正在使用的浏览器. 为了正常的访问, 请 <a href="http://browsehappy.com/">升级你的浏览器</a>'); ?>.</div>
 <![endif]-->
 
 <header id="header" class="clearfix">

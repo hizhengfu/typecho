@@ -1,4 +1,4 @@
-<?php if(!defined('__TYPECHO_ROOT_DIR__')) exit; ?>
+<?php if(!defined('__TYPECHO_ADMIN__')) exit; ?>
 <?php Typecho_Plugin::factory('admin/write-js.php')->write(); ?>
 <?php Typecho_Widget::widget('Widget_Metas_Tag_Cloud', 'sort=count&desc=1&limit=200')->to($tags); ?>
 
@@ -42,7 +42,7 @@ $(document).ready(function() {
 
     // tag autocomplete 提示
     var tags = $('#tags'), tagsPre = [];
-
+    
     if (tags.length > 0) {
         var items = tags.val().split(','), result = [];
         for (var i = 0; i < items.length; i ++) {
@@ -109,20 +109,32 @@ $(document).ready(function() {
     var slug = $('#slug');
 
     if (slug.length > 0) {
-        var sw = slug.width();
-        if (slug.val().length > 0) {
-            slug.css('width', 'auto').attr('size', slug.val().length);
+        var justifySlug = $('<div />').css(slug.css()).css({
+            'display'   :   'none',
+            'width'     :   'auto'
+        }).insertAfter(slug), originalWidth = slug.width();
+
+        function justifySlugWidth() {
+            var html = slug.val().replace(/&/g, '&amp;')
+                    .replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;')
+                    .replace(/'/g, '&#039;')
+                    .replace(/"/g, '&quot;')
+                    .replace(/ /g, '&nbsp;')
+                    .replace(/((&nbsp;)*)&nbsp;/g, '$1 ')
+                    .replace(/\n/g, '<br />')
+                    .replace(/<br \/>[ ]*$/, '<br />-')
+                    .replace(/<br \/> /g, '<br />&nbsp;');
+
+            justifySlug.css('min-width', html.length > 0
+                ? 'inherit' : originalWidth);
+
+            justifySlug.html(html);
+            slug.width(justifySlug.width());
         }
 
-        slug.bind('input propertychange', function () {
-            var t = $(this), l = t.val().length;
-
-            if (l > 0) {
-                t.css('width', 'auto').attr('size', l);
-            } else {
-                t.css('width', sw).removeAttr('size');
-            }
-        }).width();
+        slug.bind('input propertychange', justifySlugWidth);
+        justifySlugWidth();
     }
 
     // 原始的插入图片和文件
@@ -141,7 +153,7 @@ $(document).ready(function() {
     }), savedData = null;
 
     // 自动保存
-    <?php if ($options->autoSave): ?>
+<?php if ($options->autoSave): ?>
     var locked = false,
         formAction = form.attr('action'),
         idInput = $('input[name=cid]'),
@@ -154,7 +166,7 @@ $(document).ready(function() {
         setInterval(function () {
             idInput.val(cid);
             var data = form.serialize();
-
+                
             if (savedData != data && !locked) {
                 locked = true;
 
@@ -185,7 +197,7 @@ $(document).ready(function() {
             autoSaveListener();
         }
     });
-    <?php endif; ?>
+<?php endif; ?>
 
     // 自动检测离开页
     var lastData = form.serialize();
@@ -202,13 +214,13 @@ $(document).ready(function() {
 
     // 控制选项和附件的切换
     var fileUploadInit = false;
-    $("#edit-secondary .typecho-option-tabs li").click(function() {
-        $("#edit-secondary .typecho-option-tabs li").removeClass('active');
-        $(this).addClass("active");
-        $(".tab-content").hide();
-
-        var selected_tab = $(this).find("a").attr("href"),
-            selected_el = $(selected_tab).show();
+    $('#edit-secondary .typecho-option-tabs li').click(function() {
+        $('#edit-secondary .typecho-option-tabs li').removeClass('active');
+        $(this).addClass('active');
+        $('.tab-content').addClass('hidden');
+        
+        var selected_tab = $(this).find('a').attr('href'),
+            selected_el = $(selected_tab).removeClass('hidden');
 
         if (!fileUploadInit) {
             selected_el.trigger('init');
@@ -235,7 +247,7 @@ $(document).ready(function() {
             password.addClass('hidden');
         }
     });
-
+    
     // 草稿删除确认
     $('.edit-draft-notice a').click(function () {
         if (confirm('<?php _e('您确认要删除这份草稿吗?'); ?>')) {
@@ -244,5 +256,13 @@ $(document).ready(function() {
 
         return false;
     });
+
+    // 全屏上传按钮控制
+    // $('#btn-fullscreen-upload').click(function() {
+    //     $(this).toggleClass('active');
+    //     $('#tab-files').toggle();
+    //     return false;
+    // });
 });
 </script>
+

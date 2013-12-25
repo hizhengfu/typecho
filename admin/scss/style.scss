@@ -10,7 +10,6 @@
 */
 
 @import "compass";
-@import "mixin";
 
 /**
 * Typecho 全局样式
@@ -302,7 +301,7 @@ a.button:hover, a.balloon-button:hover {
 }
 .typecho-login {
   display: table-cell;
-  padding-bottom: 100px;
+  padding: 30px 0 100px;
   width: 280px;
   text-align: center;
   vertical-align: middle;
@@ -794,6 +793,8 @@ background: #FFF1A8;
   list-style: none;
   border: 1px solid #D9D9D6;
   padding: 6px 12px;
+  max-height: 240px;
+  overflow: auto;
   background-color: #FFF;
   border-radius: 2px;
 }
@@ -807,9 +808,6 @@ background: #FFF1A8;
   padding: 0;
 }
 
-#edit-secondary {
-  #tab-files { display: none; }
-}
 
 /**
 * 标签列表
@@ -878,23 +876,31 @@ background: #FFF1A8;
   list-style: none;
   margin: 0 10px;
   padding: 0;
-  li {
-    padding: 8px 0;
-    border-top: 1px dashed #D9D9D6;
-  }
-  .file {
-    margin-left: 5px;
-  }
+  word-break: break-all;
+  li,
   .insert {
-    display: block;
-    max-width: 100%;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
   }
+  li {
+    padding: 8px 0;
+    border-top: 1px dashed #D9D9D6;
+  }
+  .insert {
+    display: block;
+    max-width: 100%;
+  }
+  .file {
+    margin-left: 5px;
+  }
   .info {
     text-transform: uppercase;
   }
+}
+
+#btn-fullscreen-upload {
+  visibility: hidden;
 }
 
 
