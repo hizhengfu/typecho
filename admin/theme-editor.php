@@ -9,7 +9,7 @@ Typecho_Widget::widget('Widget_Themes_Files')->to($files);
 <div class="main">
     <div class="body container">
         <?php include 'page-title.php'; ?>
-        <div class="colgroup typecho-page-main" role="main">
+        <div class="row typecho-page-main" role="main">
             <div class="col-mb-12">
                 <ul class="typecho-option-tabs fix-tabs clearfix">
                     <li><a href="<?php $options->adminUrl('themes.php'); ?>"><?php _e('可以使用的外观'); ?></a></li>
@@ -35,7 +35,7 @@ Typecho_Widget::widget('Widget_Themes_Files')->to($files);
                             <?php if($files->currentIsWriteable()): ?>
                             <input type="hidden" name="theme" value="<?php echo $files->currentTheme(); ?>" />
                             <input type="hidden" name="edit" value="<?php echo $files->currentFile(); ?>" />
-                            <button type="submit" class="primary"><?php _e('保存文件'); ?></button>
+                            <button type="submit" class="btn primary"><?php _e('保存文件'); ?></button>
                             <?php else: ?>
                                 <em><?php _e('此文件无法写入'); ?></em>
                             <?php endif; ?>

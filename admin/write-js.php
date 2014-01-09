@@ -66,7 +66,7 @@ $(document).ready(function() {
                 'tags'  =>  $tags->name
             );
         }
-        echo json_encode($data);
+        echo Json::encode($data);
         ?>, {
             propertyToSearch:   'tags',
             tokenValue      :   'tags',
@@ -175,7 +175,7 @@ $(document).ready(function() {
                     savedData = data;
                     lastSaveTime = o.time;
                     cid = o.cid;
-                    autoSave.text('<?php _e('内容已经保存'); ?>' + ' (' + o.time + ')').effect('highlight', 1000);
+                    autoSave.text('<?php _e('已保存'); ?>' + ' (' + o.time + ')').effect('highlight', 1000);
                     locked = false;
                 }, 'json');
             }
@@ -189,7 +189,7 @@ $(document).ready(function() {
 
     $('#text').bind('input propertychange', function () {
         if (!locked) {
-            autoSave.text('<?php _e('内容尚未保存'); ?>' + (lastSaveTime ? ' (<?php _e('上次保存时间'); ?>: ' + lastSaveTime + ')' : ''));
+            autoSave.text('<?php _e('尚未保存'); ?>' + (lastSaveTime ? ' (<?php _e('上次保存时间'); ?>: ' + lastSaveTime + ')' : ''));
         }
 
         if (!autoSaveOnce) {
@@ -256,13 +256,6 @@ $(document).ready(function() {
 
         return false;
     });
-
-    // 全屏上传按钮控制
-    // $('#btn-fullscreen-upload').click(function() {
-    //     $(this).toggleClass('active');
-    //     $('#tab-files').toggle();
-    //     return false;
-    // });
 });
 </script>
 

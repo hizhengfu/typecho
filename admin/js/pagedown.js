@@ -2688,7 +2688,7 @@ else
             // The ok button
             var okButton = doc.createElement("button");
             okButton.type = "button";
-            okButton.className = "btn-s primary";
+            okButton.className = "btn btn-s primary";
             okButton.onclick = function () { return close(false); };
             okButton.innerHTML = ok;
             /*
@@ -2701,7 +2701,7 @@ else
             // The cancel button
             var cancelButton = doc.createElement("button");
             cancelButton.type = "button";
-            cancelButton.className = "btn-s";
+            cancelButton.className = "btn btn-s";
             cancelButton.onclick = function () { return close(true); };
             cancelButton.innerHTML = cancel;
             /*
@@ -2846,7 +2846,7 @@ else
             // The ok button
             var okButton = doc.createElement("button");
             okButton.type = "button";
-            okButton.className = "btn-s primary";
+            okButton.className = "btn btn-s primary";
             okButton.onclick = function () { return close(false); };
             okButton.innerHTML = ok;
             /*
@@ -2859,7 +2859,7 @@ else
             // The cancel button
             var cancelButton = doc.createElement("button");
             cancelButton.type = "button";
-            cancelButton.className = "btn-s";
+            cancelButton.className = "btn btn-s";
             cancelButton.onclick = function () { return close(true); };
             cancelButton.innerHTML = cancel;
             /*
@@ -3217,6 +3217,7 @@ else
 
             buttons.redo = makeButton("wmd-redo-button", redoTitle, "-220px", null);
             buttons.redo.execute = function (manager) { if (manager) manager.redo(); };
+            makeSpacer(4);
             buttons.fullscreen = makeButton("wmd-fullscreen-button", getString("fullscreen"), "-240px", null);
             buttons.fullscreen.execute = function () { fullScreenManager.doFullScreen(buttons, true); };
             buttons.exitFullscreen = makeButton("wmd-exit-fullscreen-button", getString("exitFullscreen"), "-260px", null);

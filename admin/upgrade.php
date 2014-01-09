@@ -7,7 +7,7 @@ include 'menu.php';
 <div class="main">
     <div class="body container">
         <?php include 'page-title.php'; ?>
-        <div class="colgroup typecho-page-main" role="main">
+        <div class="row typecho-page-main" role="main">
             <div class="col-mb-12">
                 <div id="typecho-welcome">
                     <form action="<?php echo Typecho_Router::url('do', array('action' => 'upgrade', 'widget' => 'Upgrade'), 
@@ -18,7 +18,7 @@ include 'menu.php';
                         <li><?php _e('此程序将把您的系统从 <strong>%s</strong> 升级到 <strong>%s</strong>', $options->version, Typecho_Common::VERSION); ?></li>
                         <li><strong class="warning"><?php _e('在升级之前强烈建议先备份您的数据'); ?></strong></li>
                     </ul>
-                    <p><button class="primary" type="submit"><?php _e('完成升级 &raquo;'); ?></button></p>
+                    <p><button class="btn primary" type="submit"><?php _e('完成升级 &raquo;'); ?></button></p>
                     </form>
                 </div>
             </div>

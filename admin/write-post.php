@@ -7,7 +7,7 @@ Typecho_Widget::widget('Widget_Contents_Post_Edit')->to($post);
 <div class="main">
     <div class="body container">
         <?php include 'page-title.php'; ?>
-        <div class="colgroup typecho-page-main typecho-post-area" role="form">
+        <div class="row typecho-page-main typecho-post-area" role="form">
             <form action="<?php $options->index('/action/contents-post-edit'); ?>" method="post" name="write_post">
                 <div class="col-mb-12 col-tb-9" role="main">
                     <?php if ($post->draft && $post->draft['cid'] != $post->cid): ?>
@@ -46,10 +46,9 @@ Typecho_Widget::widget('Widget_Contents_Post_Edit')->to($post);
 
                     <p class="submit clearfix">
                         <span class="right">
-                            <!-- <button type="button" class="btn-text" id="btn-fullscreen-upload"><i class="i-upload"><?php _e('附件'); ?></i></button> -->
                             <input type="hidden" name="cid" value="<?php $post->cid(); ?>" />
-                            <button type="submit" name="do" value="save" id="btn-save"><?php _e('保存草稿'); ?></button>
-                            <button type="submit" name="do" value="publish" class="primary" id="btn-submit"><?php _e('发布文章'); ?></button>
+                            <button type="submit" name="do" value="save" id="btn-save" class="btn"><?php _e('保存草稿'); ?></button>
+                            <button type="submit" name="do" value="publish" class="btn primary" id="btn-submit"><?php _e('发布文章'); ?></button>
                             <?php if ($options->markdown && (!$post->have() || $post->isMarkdown)): ?>
                             <input type="hidden" name="markdown" value="1" />
                             <?php endif; ?>
@@ -97,7 +96,7 @@ Typecho_Widget::widget('Widget_Contents_Post_Edit')->to($post);
 
                         <?php Typecho_Plugin::factory('admin/write-post.php')->option($post); ?>
 
-                        <button type="button" id="advance-panel-btn" class="btn-xs"><?php _e('高级选项'); ?> <i class="i-caret-down"></i></button>
+                        <button type="button" id="advance-panel-btn" class="btn btn-xs"><?php _e('高级选项'); ?> <i class="i-caret-down"></i></button>
                         <div id="advance-panel">
                             <?php if($user->pass('editor', true)): ?>
                             <section class="typecho-post-option visibility-option">
